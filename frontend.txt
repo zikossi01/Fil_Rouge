@@ -1,0 +1,71 @@
+frontend/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── assets/              # Static assets
+├── src/
+│   ├── app/
+│   │   ├── App.tsx
+│   │   ├── App.test.tsx
+│   │   └── App.css
+│   ├── components/
+│   │   ├── common/          # Reusable components
+│   │   │   ├── Button/
+│   │   │   ├── Input/
+│   │   │   ├── Modal/
+│   │   │   └── Card/
+│   │   ├── layout/          # Layout components
+│   │   │   ├── Header/
+│   │   │   ├── Footer/
+│   │   │   ├── Sidebar/
+│   │   │   └── Navigation/
+│   │   └── features/        # Feature-specific components
+│   │       ├── cart/
+│   │       ├── checkout/
+│   │       ├── products/
+│   │       └── tracking/
+│   ├── pages/               # Page components
+│   │   ├── Home/
+│   │   ├── Products/
+│   │   ├── Cart/
+│   │   ├── Checkout/
+│   │   ├── Profile/
+│   │   ├── OrderTracking/
+│   │   └── Admin/
+│   ├── services/            # API service layer
+│   │   ├── api.ts           # Axios configuration
+│   │   ├── auth.service.ts
+│   │   ├── product.service.ts
+│   │   ├── order.service.ts
+│   │   └── user.service.ts
+│   ├── store/               # State management (Redux/Context)
+│   │   ├── slices/
+│   │   │   ├── authSlice.ts
+│   │   │   ├── cartSlice.ts
+│   │   │   └── orderSlice.ts
+│   │   └── store.ts
+│   ├── hooks/               # Custom React hooks
+│   │   ├── useAuth.ts
+│   │   ├── useCart.ts
+│   │   └── useGeolocation.ts
+│   ├── utils/               # Utility functions
+│   │   ├── validators.ts
+│   │   ├── formatters.ts
+│   │   └── constants.ts
+│   ├── types/               # TypeScript type definitions
+│   │   ├── user.types.ts
+│   │   ├── product.types.ts
+│   │   └── order.types.ts
+│   ├── styles/              # Global styles
+│   │   ├── globals.css
+│   │   └── tailwind.css
+│   ├── routes/              # Route definitions
+│   │   ├── AppRoutes.tsx
+│   │   ├── PrivateRoute.tsx
+│   │   └── AdminRoute.tsx
+│   └── index.tsx
+├── .env.example
+├── .eslintrc.json
+├── tailwind.config.js
+├── tsconfig.json
+└── package.json
