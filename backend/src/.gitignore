@@ -1,6 +1,5 @@
 # Node.js dependencies
-backend/src/node_modules/
-frontend/node_modules/
+node_modules/
 
 # Logs
 *.log
@@ -14,11 +13,9 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
-# Build output
-backend/dist/
-frontend/build/
-frontend/.next/
-frontend/out/
+# Build output / compiled files
+dist/
+build/
 
 # Cache
 .cache/
@@ -33,9 +30,5 @@ frontend/out/
 .DS_Store
 Thumbs.db
 
-# Lock files (optional: if you only want package.json tracked)
-backend/package-lock.json
-frontend/package-lock.json
-
-# Misc
+# Coverage / test reports
 coverage/
