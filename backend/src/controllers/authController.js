@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 
-// Register user
 const registerUser = async (req, res) => {
   try {
     const { name, email, password, phone, address, role } = req.body;
@@ -36,7 +35,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// Login user
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -59,7 +58,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// Get user profile
+
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select('-password');
@@ -69,7 +68,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// Update user profile
+
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);

@@ -277,7 +277,7 @@ const importFromFakeStore = async (req, res) => {
       unit: 'piece'
     }));
 
-    // Upsert by name to avoid duplicates
+    
     let created = 0;
     for (const prod of payload) {
       const existing = await Product.findOne({ name: prod.name });
@@ -317,7 +317,7 @@ function mapCategory(cat) {
 
 module.exports.importFromFakeStore = importFromFakeStore;
 
-// Import many products from DummyJSON (accurate images/descriptions)
+
 const importFromDummyJson = async (req, res) => {
   try {
     const pageSize = Math.min(Number(req.query.limit) || 100, 100);
@@ -334,13 +334,13 @@ const importFromDummyJson = async (req, res) => {
       const products = Array.isArray(data.products) ? data.products : [];
       if (products.length === 0) break;
 
-      // Map and upsert
+    
       for (const p of products) {
         const doc = {
           name: p.title,
           description: p.description,
           price: Math.max(0, Number(p.price) || 0),
-          // Fit to allowed enums; put others as 'other'
+        
           category: 'other',
           image: Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : p.thumbnail,
           stock: Number(p.stock) || 100,
@@ -372,7 +372,7 @@ const importFromDummyJson = async (req, res) => {
 
 module.exports.importFromDummyJson = importFromDummyJson;
 
-// Import across all DummyJSON categories with correct mapping
+
 const importAllDummyJsonCategories = async (req, res) => {
   try {
     const pageSize = Math.min(Number(req.query.limit) || 100, 100);
@@ -380,15 +380,15 @@ const importAllDummyJsonCategories = async (req, res) => {
     if (!categoriesRes.ok) throw new Error('Failed to fetch categories');
     let categories = await categoriesRes.json();
 
-    // Keep only deliverable categories (food, clothes, electronics, furniture)
+    
     const allowedDjCats = new Set([
-      // Electronics
+   
       'smartphones','laptops','tablets','mobile-accessories','audio','lighting',
-      // Clothing
+     
       'mens-shirts','mens-shoes','mens-watches','womens-dresses','womens-shoes','womens-watches','womens-bags','tops','sunglasses',
-      // Furniture / Home
+    
       'home-decoration','furniture','lighting','kitchen-accessories',
-      // Food
+  
       'groceries'
     ]);
     categories = categories.filter((c) => allowedDjCats.has(String(c)));
@@ -397,7 +397,7 @@ const importAllDummyJsonCategories = async (req, res) => {
     let updated = 0;
 
     const importCategory = async (djCat) => {
-      // paginate this category
+   
       let skip = 0;
       while (true) {
         const url = `https://dummyjson.com/products/category/${encodeURIComponent(djCat)}?limit=${pageSize}&skip=${skip}`;
@@ -409,7 +409,7 @@ const importAllDummyJsonCategories = async (req, res) => {
 
         for (const p of products) {
           const cat = mapCategory(djCat);
-          // Skip categories that don't map to deliverable buckets
+         
           if (!['electronics','men','women','clothing','home','pantry','jewelery'].includes(cat)) continue;
           const doc = {
             name: p.title,
@@ -439,7 +439,7 @@ const importAllDummyJsonCategories = async (req, res) => {
       }
     };
 
-    // Import in sequence to avoid heavy parallel load on free API
+    
     for (const djCat of categories) {
       await importCategory(djCat);
     }
@@ -452,7 +452,7 @@ const importAllDummyJsonCategories = async (req, res) => {
 
 module.exports.importAllDummyJsonCategories = importAllDummyJsonCategories;
 
-// Import food products from OpenFoodFacts (real names/images)
+
 const importFromOpenFoodFacts = async (req, res) => {
   try {
     const pageSize = Math.min(Number(req.query.limit) || 200, 500);
@@ -511,7 +511,7 @@ const importFromOpenFoodFacts = async (req, res) => {
 
 module.exports.importFromOpenFoodFacts = importFromOpenFoodFacts;
 
-// Bulk-generate many products with valid Mongo ObjectIds
+
 const bulkGenerateProducts = async (req, res) => {
   try {
     const count = Math.min(Number(req.query.count) || 1000, 20000);
@@ -540,7 +540,7 @@ const bulkGenerateProducts = async (req, res) => {
     const created = await Product.insertMany(docs, { ordered: false });
     res.json({ message: 'Bulk generated products', created: created.length });
   } catch (err) {
-    // If some inserts failed due to duplicates, still report success count if available
+    
     if (err?.insertedDocs) {
       return res.json({ message: 'Bulk generated products (partial)', created: err.insertedDocs.length });
     }

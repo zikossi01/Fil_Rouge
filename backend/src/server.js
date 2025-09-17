@@ -9,22 +9,22 @@ const Product = require('./models/Product');
 const errorHandler = require('./middleware/errorMiddleware');
 const logger = require('./utils/logger');
 
-// Import routes
+
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const deliveryRoutes = require('./routes/deliveryRoutes');
-const reviewRoutes = require('./routes/reviewRoutes'); // NEW
-const userRoutes = require('./routes/userRoutes'); // NEW
-const uploadRoutes = require('./routes/uploadRoutes'); // NEW
-const seedRoutes = require('./routes/seedRoutes'); // NEW
+const reviewRoutes = require('./routes/reviewRoutes'); 
+const userRoutes = require('./routes/userRoutes'); 
+const uploadRoutes = require('./routes/uploadRoutes'); 
+const seedRoutes = require('./routes/seedRoutes'); 
 const curatedRoutes = require('./routes/curatedRoutes');
 const comprehensiveRoutes = require('./routes/comprehensiveRoutes');
 
-// Load environment variables
+
 dotenv.config();
 
-// Connect to database and auto-seed comprehensive products if DB empty
+
 connectDB().then(async () => {
   try {
     const { autoGenerateProducts } = require('./controllers/comprehensiveController');
@@ -37,32 +37,32 @@ connectDB().then(async () => {
 
 const app = express();
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // NEW: Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
-// Logging middleware
+
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.originalUrl}`);
   next();
 });
 
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/deliveries', deliveryRoutes);
-app.use('/api/reviews', reviewRoutes); // NEW
-app.use('/api/users', userRoutes); // NEW
-app.use('/api/upload', uploadRoutes); // NEW
-app.use('/api/seed', seedRoutes); // NEW
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/users', userRoutes); 
+app.use('/api/upload', uploadRoutes); 
+app.use('/api/seed', seedRoutes); 
 app.use('/api/curated', curatedRoutes);
 app.use('/api/comprehensive', comprehensiveRoutes);
 app.use('/api/perfect', require('./routes/perfectRoutes'));
 
-// Health check route
+
 app.get('/api/health', (req, res) => {
   res.json({ 
     message: 'Grocery Delivery API is running!',
@@ -71,12 +71,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 404 handler
+
 app.use('*', (req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// Error handler
+
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

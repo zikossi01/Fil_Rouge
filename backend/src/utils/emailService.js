@@ -1,7 +1,6 @@
-// utils/emailService.js
+
 const nodemailer = require('nodemailer');
 
-// Create transporter
 const createTransporter = () => {
   return nodemailer.createTransporter({
     service: 'gmail',
@@ -12,7 +11,7 @@ const createTransporter = () => {
   });
 };
 
-// Send order confirmation email
+
 const sendOrderConfirmation = async (user, order) => {
   try {
     const transporter = createTransporter();
@@ -36,7 +35,7 @@ const sendOrderConfirmation = async (user, order) => {
   }
 };
 
-// Send delivery status update
+
 const sendDeliveryUpdate = async (user, order, status) => {
   try {
     const transporter = createTransporter();
@@ -63,7 +62,7 @@ const sendDeliveryUpdate = async (user, order, status) => {
   }
 };
 
-// Send password reset email
+
 const sendPasswordReset = async (user, resetToken) => {
   try {
     const transporter = createTransporter();

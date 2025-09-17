@@ -14,8 +14,7 @@ export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('name');
   const { addItem } = useCartStore();
-  // Backend data source (Mongo IDs) with pagination
-  // Pagination enabled – backend returns pages
+ 
   const [page, setPage] = useState(1);
   const [limit] = useState(12);
   const [totalPages, setTotalPages] = useState(1);
@@ -23,11 +22,10 @@ export default function Products() {
   const [hasMore, setHasMore] = useState(true);
   const lastTriggeredPageRef = useRef(0);
 
-  // Match backend categories exactly (Product enum)
-  // Categories hidden in UI (but keep array empty)
+ 
   const categories = [];
 
-  // Helper: fetch a specific page (live products)
+ 
   const isValidObjectId = (val) => typeof val === 'string' && /^[0-9a-fA-F]{24}$/.test(val);
 
   const fetchPage = async (targetPage) => {
@@ -49,7 +47,7 @@ export default function Products() {
     setHasMore((data?.pagination?.currentPage || targetPage) < (data?.pagination?.totalPages || 1));
   };
 
-  // Fetch first page from backend so IDs match Mongo ObjectId
+ 
   useEffect(() => {
     const loadFromBackend = async () => {
       try {
@@ -65,7 +63,7 @@ export default function Products() {
     loadFromBackend();
   }, [limit]);
 
-  // When filters/search change, reset to page 1
+
   useEffect(() => {
     const refresh = async () => {
       try {
@@ -77,7 +75,7 @@ export default function Products() {
         setLoading(false);
       }
     };
-    // Debounce search a bit (applies only when searchTerm changes via submit)
+   
     const t = setTimeout(() => { refresh(); }, 150);
     lastTriggeredPageRef.current = 0;
     return () => clearTimeout(t);
@@ -119,10 +117,7 @@ export default function Products() {
       ? items.filter((p) => p && isValidObjectId(p._id))
       : [];
 
-    // Filter by category
-    // Category filtering removed
 
-    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(item => 
         item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -131,7 +126,7 @@ export default function Products() {
       );
     }
 
-    // Sort items
+  
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'price-low':

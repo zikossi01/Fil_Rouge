@@ -8,15 +8,15 @@ const connectDB = async () => {
     }
 
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000, // 5 seconds timeout
-      bufferCommands: false // Disable mongoose buffering
+      serverSelectionTimeoutMS: 5000,
+      bufferCommands: false 
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     return conn;
   } catch (error) {
     console.error('Database connection error:', error.message);
 
-    // Fallback to in-memory MongoDB only in development/test
+  
     const nodeEnv = process.env.NODE_ENV || 'development';
     const allowMemory = nodeEnv !== 'production';
 
@@ -25,7 +25,7 @@ const connectDB = async () => {
     }
 
     try {
-      // Lazy require to avoid mandatory dependency in production
+      
       ({ MongoMemoryServer } = require('mongodb-memory-server'));
     } catch (e) {
       console.error('mongodb-memory-server is not installed. Install it to use in-memory DB.');

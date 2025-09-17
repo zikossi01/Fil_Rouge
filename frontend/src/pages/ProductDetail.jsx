@@ -14,9 +14,9 @@ export default function ProductDetail() {
       try {
         setLoading(true);
         
-        // Handle different product ID formats
+       
         if (id.startsWith('fake_')) {
-          // FakeStore products
+         
           const index = parseInt(id.replace('fake_', ''));
           const response = await fetch('https://fakestoreapi.com/products');
           if (!response.ok) throw new Error('Failed to fetch product');
@@ -42,7 +42,7 @@ export default function ProductDetail() {
           
           setProduct(transformedProduct);
         } else if (id.startsWith('product_')) {
-          // Unlimited products from external controller
+         
           const productData = getProductFromUnlimitedSystem(id);
           if (productData) {
             setProduct(productData);
@@ -50,7 +50,7 @@ export default function ProductDetail() {
             setError('Product not found');
           }
         } else if (id.startsWith('gen_') || id.startsWith('add_') || id.includes('_v')) {
-          // Generated, additional, or variation products
+         
           const productData = getProductFromCache(id);
           if (productData) {
             setProduct(productData);
@@ -58,7 +58,7 @@ export default function ProductDetail() {
             setError('Product not found');
           }
         } else {
-          // Fetch from backend so IDs remain Mongo ObjectId
+         
           const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/products/${id}`);
           if (!res.ok) throw new Error('Product not found');
           const p = await res.json();
@@ -87,9 +87,9 @@ export default function ProductDetail() {
     loadProduct();
   }, [id]);
 
-  // Get product from the unlimited products system
+ 
   const getProductFromUnlimitedSystem = (productId) => {
-    // Parse the unlimited product ID format: product_{globalIndex}_{timestamp}_{randomString}
+    
     const parts = productId.split('_');
     if (parts.length < 3) return null;
     
@@ -152,7 +152,7 @@ export default function ProductDetail() {
     
     const variation = Math.floor(globalIndex / baseProducts.length);
     
-    // Create unique variations with different names, prices, and characteristics
+    
     const variationNames = [
       'Premium', 'Deluxe', 'Pro', 'Ultra', 'Elite', 'Signature', 'Limited Edition',
       'Special', 'Exclusive', 'Professional', 'Advanced', 'Supreme', 'Master',
@@ -168,29 +168,29 @@ export default function ProductDetail() {
     const nameVariation = variationNames[globalIndex % variationNames.length];
     const suffixVariation = variationSuffixes[globalIndex % variationSuffixes.length];
     
-    // Create unique product name
+    
     let productName = baseProduct.name;
     if (variation > 0) {
       productName = `${nameVariation} ${baseProduct.name} ${suffixVariation}`;
     }
     
-    // Vary price based on variation and global index
+   
     const priceVariation = (Math.sin(globalIndex * 0.1) * 100) + (Math.random() * 50 - 25);
     const newPrice = Math.max(1, baseProduct.price + priceVariation);
     
-    // Vary rating based on global index
+   
     const ratingVariation = Math.sin(globalIndex * 0.05) * 0.5;
     const newRating = Math.max(3.0, Math.min(5.0, baseProduct.rating + ratingVariation));
     
-    // Vary stock based on global index
+   
     const stockVariation = Math.floor(Math.sin(globalIndex * 0.02) * 100) + 50;
     const newStock = Math.max(1, Math.floor(Math.random() * 300) + stockVariation);
     
-    // Vary review count
+    
     const reviewVariation = Math.floor(Math.sin(globalIndex * 0.03) * 200) + 100;
     const newReviewCount = Math.max(10, Math.floor(Math.random() * 1000) + reviewVariation);
     
-    // Vary description
+    
     const descriptionVariations = [
       `Enhanced ${baseProduct.description.toLowerCase()}`,
       `Upgraded ${baseProduct.description.toLowerCase()}`,
@@ -221,14 +221,13 @@ export default function ProductDetail() {
     };
   };
 
-  // Get product from the massive product cache
+  
   const getProductFromCache = (productId) => {
-    // This would normally fetch from a cache or database
-    // For now, we'll generate it based on the ID
+    
     const index = parseInt(productId.replace(/[^\d]/g, ''));
     
     const productMap = {
-      // Food & Groceries
+      
       1000: { name: 'Organic Bananas', category: 'fruits', price: 2.99, unit: 'bunch', stock: 45, description: 'Sweet, ripe organic bananas perfect for smoothies, baking, or a healthy snack. Grown without pesticides and harvested at peak ripeness.' },
       1001: { name: 'Fresh Strawberries', category: 'fruits', price: 4.99, unit: 'pack', stock: 38, description: 'Juicy, red strawberries picked at peak ripeness. Perfect for desserts, smoothies, or fresh eating.' },
       1002: { name: 'Organic Apples', category: 'fruits', price: 3.49, unit: 'lb', stock: 52, description: 'Crisp, organic apples with perfect balance of sweet and tart. Great for snacking, baking, or juicing.' },
@@ -240,7 +239,7 @@ export default function ProductDetail() {
       1008: { name: 'Organic Pears', category: 'fruits', price: 3.99, unit: 'lb', stock: 29, description: 'Juicy, organic pears with smooth texture. Perfect for salads, baking, or fresh snacking.' },
       1009: { name: 'Fresh Watermelon', category: 'fruits', price: 6.99, unit: 'piece', stock: 12, description: 'Sweet, refreshing watermelon perfect for hot summer days. Great for fruit salads or fresh juice.' },
       
-      // Vegetables
+      
       1010: { name: 'Organic Spinach', category: 'vegetables', price: 2.49, unit: 'bag', stock: 35, description: 'Fresh organic spinach leaves packed with vitamins and minerals. Perfect for salads, smoothies, or cooking.' },
       1011: { name: 'Fresh Broccoli', category: 'vegetables', price: 2.99, unit: 'head', stock: 27, description: 'Crisp, fresh broccoli with tight florets. Great steamed, roasted, or in stir-fries.' },
       1012: { name: 'Organic Carrots', category: 'vegetables', price: 1.99, unit: 'lb', stock: 44, description: 'Sweet, organic carrots with bright orange color. Perfect for snacking, juicing, or cooking.' },
@@ -252,7 +251,7 @@ export default function ProductDetail() {
       1018: { name: 'Organic Potatoes', category: 'vegetables', price: 2.49, unit: 'lb', stock: 41, description: 'Versatile organic potatoes. Great for baking, mashing, frying, or roasting.' },
       1019: { name: 'Fresh Lettuce', category: 'vegetables', price: 1.99, unit: 'head', stock: 33, description: 'Crisp, fresh lettuce perfect for salads and sandwiches.' },
       
-      // Meat & Dairy
+     
       1020: { name: 'Premium Ground Beef', category: 'meat', price: 8.99, unit: 'lb', stock: 30, description: 'High-quality ground beef from grass-fed cattle. Perfect for burgers, meatballs, or tacos. 80/20 lean-to-fat ratio for optimal flavor.' },
       1021: { name: 'Organic Chicken Breast', category: 'meat', price: 6.99, unit: 'lb', stock: 25, description: 'Boneless, skinless organic chicken breast. Lean protein perfect for grilling, baking, or stir-frying.' },
       1022: { name: 'Fresh Salmon Fillet', category: 'meat', price: 12.99, unit: 'lb', stock: 18, description: 'Fresh Atlantic salmon fillet rich in omega-3 fatty acids. Great grilled, baked, or pan-seared.' },
@@ -264,7 +263,7 @@ export default function ProductDetail() {
       1028: { name: 'Fresh Eggs', category: 'dairy', price: 4.49, unit: 'dozen', stock: 45, description: 'Farm-fresh eggs from free-range chickens. Great for breakfast, baking, or cooking.' },
       1029: { name: 'Organic Butter', category: 'dairy', price: 6.99, unit: 'lb', stock: 28, description: 'Rich, creamy organic butter perfect for baking, cooking, or spreading on bread.' },
       
-      // Electronics
+     
       1030: { name: 'iPhone 15 Pro', category: 'electronics', price: 999.99, unit: 'piece', stock: 15, description: 'Latest iPhone with A17 Pro chip, titanium design, and advanced camera system. 6.1" Super Retina XDR display.' },
       1031: { name: 'Samsung Galaxy S24', category: 'electronics', price: 799.99, unit: 'piece', stock: 18, description: 'Flagship Android phone with Snapdragon 8 Gen 3, 6.2" Dynamic AMOLED display, and AI-powered features.' },
       1032: { name: 'MacBook Pro 16"', category: 'electronics', price: 2499.99, unit: 'piece', stock: 8, description: 'Professional laptop with M3 Pro chip, 16" Liquid Retina XDR display, and up to 22 hours battery life.' },
@@ -276,7 +275,7 @@ export default function ProductDetail() {
       1038: { name: 'Nintendo Switch OLED', category: 'electronics', price: 349.99, unit: 'piece', stock: 20, description: 'Hybrid gaming console with 7" OLED screen, enhanced audio, and versatile gaming modes.' },
       1039: { name: 'iPad Air', category: 'electronics', price: 599.99, unit: 'piece', stock: 16, description: 'Powerful tablet with M2 chip, 10.9" Liquid Retina display, and Apple Pencil support.' },
       
-      // Home & Kitchen
+     
       1040: { name: 'KitchenAid Stand Mixer', category: 'kitchen', price: 399.99, unit: 'piece', stock: 12, description: 'Professional stand mixer with 10-speed motor, 5-quart bowl, and multiple attachments for all your baking needs.' },
       1041: { name: 'Ninja Foodi 9-in-1', category: 'kitchen', price: 199.99, unit: 'piece', stock: 18, description: 'Multi-cooker with pressure cooking, air frying, slow cooking, and 8 other functions in one appliance.' },
       1042: { name: 'Instant Pot Duo', category: 'kitchen', price: 89.99, unit: 'piece', stock: 25, description: '7-in-1 electric pressure cooker with safety features and multiple cooking modes.' },
@@ -288,7 +287,7 @@ export default function ProductDetail() {
       1048: { name: 'Cuisinart Toaster Oven', category: 'kitchen', price: 129.99, unit: 'piece', stock: 22, description: 'Convection toaster oven with multiple cooking functions and digital controls.' },
       1049: { name: 'KitchenAid Coffee Grinder', category: 'kitchen', price: 89.99, unit: 'piece', stock: 18, description: 'Burr coffee grinder with 15 grind settings for perfect coffee every time.' },
       
-      // Clothing & Fashion
+     
       1050: { name: 'Nike Air Max 270', category: 'men', price: 129.99, unit: 'pair', stock: 30, description: 'Comfortable running shoes with Air Max unit for maximum cushioning and style.' },
       1051: { name: 'Adidas Ultraboost 22', category: 'men', price: 189.99, unit: 'pair', stock: 25, description: 'Premium running shoes with responsive Boost midsole and Primeknit upper.' },
       1052: { name: 'Levi\'s 501 Jeans', category: 'men', price: 69.99, unit: 'pair', stock: 35, description: 'Classic straight-leg jeans with button fly and timeless style.' },
@@ -300,7 +299,7 @@ export default function ProductDetail() {
       1058: { name: 'Levi\'s Denim Jacket', category: 'men', price: 89.99, unit: 'piece', stock: 18, description: 'Classic denim jacket with timeless style and comfortable fit.' },
       1059: { name: 'Calvin Klein Boxers', category: 'men', price: 24.99, unit: 'pack', stock: 50, description: 'Comfortable cotton boxers with elastic waistband.' },
       
-      // Health & Beauty
+      
       1060: { name: 'Vitamin C Supplements', category: 'health', price: 15.99, unit: 'bottle', stock: 55, description: 'High-potency vitamin C supplements to support immune health and collagen production.' },
       1061: { name: 'Omega-3 Fish Oil', category: 'health', price: 24.99, unit: 'bottle', stock: 42, description: 'Pure fish oil supplements rich in EPA and DHA for heart and brain health.' },
       1062: { name: 'Probiotic Gummies', category: 'health', price: 19.99, unit: 'bottle', stock: 38, description: 'Delicious probiotic gummies to support digestive health and immune function.' },
@@ -312,7 +311,7 @@ export default function ProductDetail() {
       1068: { name: 'Vitamin E Oil', category: 'health', price: 12.99, unit: 'bottle', stock: 52, description: 'Pure vitamin E oil for skin nourishment and antioxidant protection.' },
       1069: { name: 'Aloe Vera Gel', category: 'health', price: 9.99, unit: 'bottle', stock: 60, description: 'Pure aloe vera gel for soothing skin and natural healing.' },
       
-      // Sports & Outdoor
+     
       1070: { name: 'Basketball Official Size', category: 'sports', price: 19.99, unit: 'piece', stock: 30, description: 'Official size basketball with superior grip and bounce for indoor and outdoor play.' },
       1071: { name: 'Tennis Racket Pro', category: 'sports', price: 89.99, unit: 'piece', stock: 12, description: 'Professional tennis racket with lightweight frame and optimal string tension.' },
       1072: { name: 'Soccer Ball', category: 'sports', price: 24.99, unit: 'piece', stock: 28, description: 'Professional soccer ball with perfect roundness and durability.' },

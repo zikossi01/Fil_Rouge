@@ -1,7 +1,7 @@
-// controllers/uploadController.js
+
 const { cloudinary } = require('../config/cloudinary');
 
-// Upload image
+
 const uploadImage = async (req, res) => {
   try {
     if (!req.file) {
@@ -18,7 +18,7 @@ const uploadImage = async (req, res) => {
   }
 };
 
-// Delete image
+
 const deleteImage = async (req, res) => {
   try {
     const { publicId } = req.body;

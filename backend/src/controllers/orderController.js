@@ -1,7 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 
-// Create new order
+
 const createOrder = async (req, res) => {
   try {
     const { products, deliveryAddress, paymentMethod, notes } = req.body;
@@ -10,7 +10,7 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'No order items' });
     }
 
-    // Calculate total amount and verify products
+   
     let totalAmount = 0;
     const orderItems = [];
 
@@ -21,7 +21,7 @@ const createOrder = async (req, res) => {
         return res.status(404).json({ message: `Product not found: ${item.product}` });
       }
 
-      // Unlimited stock mode: skip stock availability checks
+      
 
       const itemTotal = product.price * item.quantity;
       totalAmount += itemTotal;
@@ -32,10 +32,10 @@ const createOrder = async (req, res) => {
         price: product.price
       });
 
-      // Unlimited stock mode: do not decrement stock
+     
     }
 
-    const deliveryFee = 10; // Fixed delivery fee
+    const deliveryFee = 10; 
     totalAmount += deliveryFee;
 
     const order = new Order({
@@ -46,7 +46,7 @@ const createOrder = async (req, res) => {
       paymentMethod,
       deliveryFee,
       notes,
-      estimatedDeliveryTime: new Date(Date.now() + 60 * 60 * 1000) // 1 hour from now
+      estimatedDeliveryTime: new Date(Date.now() + 60 * 60 * 1000) 
     });
 
     const createdOrder = await order.save();
@@ -58,7 +58,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-// Get user orders
+
 const getUserOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
@@ -71,7 +71,7 @@ const getUserOrders = async (req, res) => {
   }
 };
 
-// Get order by ID
+
 const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
@@ -88,7 +88,7 @@ const getOrderById = async (req, res) => {
   }
 };
 
-// Update order status
+
 const updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -112,7 +112,7 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
-// Get all orders (Admin only)
+
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({})

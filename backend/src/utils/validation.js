@@ -1,28 +1,27 @@
-// utils/validation.js
+
 const validator = require('validator');
 const mongoose = require('mongoose');
 
-// Validate email
+
 const validateEmail = (email) => {
   return validator.isEmail(email);
 };
 
-// Validate password strength
+
 const validatePassword = (password) => {
   return password.length >= 6;
 };
 
-// Validate phone number
 const validatePhone = (phone) => {
   return validator.isMobilePhone(phone, 'any', { strictMode: false });
 };
 
-// Validate MongoDB ObjectId
+
 const validateObjectId = (id) => {
   return mongoose.Types.ObjectId.isValid(id);
 };
 
-// Validate product data
+
 const validateProduct = (productData) => {
   const errors = [];
   
@@ -49,7 +48,7 @@ const validateProduct = (productData) => {
   return errors;
 };
 
-// Validate user registration data
+
 const validateUserRegistration = (userData) => {
   const errors = [];
   

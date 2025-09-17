@@ -1,4 +1,4 @@
-// models/Review.js
+
 const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
@@ -31,7 +31,7 @@ const reviewSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Prevent duplicate reviews from the same user for the same product
+
 reviewSchema.index({ user: 1, product: 1 }, { unique: true });
 
 module.exports = mongoose.model('Review', reviewSchema);

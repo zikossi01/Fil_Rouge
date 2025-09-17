@@ -1,8 +1,7 @@
-// controllers/userController.js
+
 const User = require('../models/User');
 const Order = require('../models/Order');
 
-// Get all users (Admin only)
 const getUsers = async (req, res) => {
   try {
     const { page = 1, limit = 10, search, role } = req.query;
@@ -39,7 +38,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-// Get user by ID (Admin only)
+
 const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
@@ -54,7 +53,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-// Update user (Admin only)
+
 const updateUser = async (req, res) => {
   try {
     const { name, email, phone, address, role, isActive } = req.body;
@@ -87,7 +86,6 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Get user statistics (Admin only)
 const getUserStats = async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
@@ -108,7 +106,7 @@ const getUserStats = async (req, res) => {
   }
 };
 
-// Get delivery persons (Admin only)
+
 const getDeliveryPersons = async (req, res) => {
   try {
     const deliveryPersons = await User.find({ role: 'delivery', isActive: true })

@@ -1,6 +1,6 @@
 const Product = require('../models/Product');
 
-// Get all products
+
 const getProducts = async (req, res) => {
   try {
     const { search, page = 1, limit = 12 } = req.query;
@@ -29,7 +29,7 @@ const getProducts = async (req, res) => {
   }
 };
 
-// Get single product
+
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -44,7 +44,7 @@ const getProductById = async (req, res) => {
   }
 };
 
-// Create product (Admin only)
+
 const createProduct = async (req, res) => {
   try {
     const { name, description, price, image, stock, unit } = req.body;
@@ -65,7 +65,7 @@ const createProduct = async (req, res) => {
   }
 };
 
-// Update product (Admin only)
+
 const updateProduct = async (req, res) => {
   try {
     const { name, description, price, image, stock, unit, isAvailable } = req.body;
@@ -91,7 +91,7 @@ const updateProduct = async (req, res) => {
   }
 };
 
-// Delete product (Admin only)
+
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);

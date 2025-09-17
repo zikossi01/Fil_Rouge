@@ -7,7 +7,7 @@ const DeliveryPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock delivery data
+   
     setTimeout(() => {
       setDeliveries([
         {

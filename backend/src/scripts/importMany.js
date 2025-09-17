@@ -4,7 +4,7 @@ dotenv.config({ path: require('path').join(__dirname, '..', '..', '.env') });
 const connectDB = require('../config/db');
 const { importFromDummyJson, importFromOpenFoodFacts } = require('../controllers/seedController');
 
-// Minimal Express-like mock for controller usage
+
 const run = async () => {
   await connectDB();
 
@@ -13,7 +13,7 @@ const run = async () => {
     json(payload) { console.log(label, JSON.stringify(payload, null, 2)); }
   });
 
-  // Import lots of realistic products with matching names/images
+ 
   await importFromDummyJson({ query: { limit: 100, pages: 10 } }, makeRes('DummyJSON:'));
   await importFromOpenFoodFacts({ query: { limit: 300 } }, makeRes('OpenFoodFacts:'));
   process.exit(0);

@@ -1,10 +1,8 @@
 const Product = require('../models/Product');
 
-// Perfect product generation system with 100% name-image-price matching
 
-// Pre-defined products with perfect name-image-price matching
 const perfectProducts = [
-  // Food Products
+  
   { name: "McDonald's Big Mac", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&h=400&fit=crop&auto=format&q=80", price: 45.99, description: "Classic Big Mac with special sauce, lettuce, cheese, pickles, onions on a sesame seed bun." },
   { name: "KFC Original Recipe Chicken", image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&h=400&fit=crop&auto=format&q=80", price: 38.50, description: "Crispy fried chicken with KFC's secret blend of herbs and spices." },
   { name: "Pizza Hut Margherita Pizza", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=600&h=400&fit=crop&auto=format&q=80", price: 65.00, description: "Fresh tomato sauce, mozzarella cheese, and basil on our signature crust." },
@@ -14,7 +12,7 @@ const perfectProducts = [
   { name: "Taco Bell Beef Tacos", image: "https://images.unsplash.com/photo-1565299585323-38174c4aab9e?w=600&h=400&fit=crop&auto=format&q=80", price: 25.50, description: "Seasoned beef, lettuce, and cheese in crispy taco shells." },
   { name: "Starbucks Coffee", image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=400&fit=crop&auto=format&q=80", price: 22.00, description: "Premium arabica coffee beans, freshly brewed to perfection." },
   
-  // Electronics
+ 
   { name: "Apple iPhone 15 Pro", image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=400&fit=crop&auto=format&q=80", price: 8999.99, description: "Latest iPhone with A17 Pro chip, titanium design, and advanced camera system." },
   { name: "Samsung Galaxy S24 Ultra", image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=400&fit=crop&auto=format&q=80", price: 7999.99, description: "Premium Android smartphone with S Pen, 200MP camera, and AI features." },
   { name: "MacBook Pro 16-inch", image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&h=400&fit=crop&auto=format&q=80", price: 12999.99, description: "Powerful laptop with M3 Pro chip, Liquid Retina XDR display, and all-day battery." },
@@ -29,7 +27,7 @@ const perfectProducts = [
   { name: "Xbox Series X Console", image: "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600&h=400&fit=crop&auto=format&q=80", price: 4999.99, description: "Most powerful Xbox console with 4K gaming and quick resume." },
   { name: "Samsung 55-inch QLED TV", image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600&h=400&fit=crop&auto=format&q=80", price: 6999.99, description: "4K QLED smart TV with quantum dot technology and HDR10+ support." },
   
-  // Clothing
+ 
   { name: "Nike Air Force 1 Sneakers", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=400&fit=crop&auto=format&q=80", price: 899.99, description: "Classic white sneakers with premium leather construction and Air-Sole unit." },
   { name: "Adidas Ultraboost 22 Running Shoes", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=400&fit=crop&auto=format&q=80", price: 1299.99, description: "High-performance running shoes with Boost midsole and Primeknit upper." },
   { name: "Levi's 501 Original Jeans", image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=400&fit=crop&auto=format&q=80", price: 699.99, description: "Classic straight-fit jeans in authentic denim with button fly." },
@@ -49,7 +47,7 @@ const perfectProducts = [
   { name: "Crate & Barrel Blanket", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop&auto=format&q=80", price: 199.99, description: "Cozy throw blanket perfect for snuggling on the couch." },
   { name: "Home Depot Plant Pot", image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=400&fit=crop&auto=format&q=80", price: 99.99, description: "Terracotta plant pot with drainage hole, ideal for indoor plants." },
   
-  // Beauty & Health
+  
   { name: "Clinique Lipstick", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop&auto=format&q=80", price: 199.99, description: "Long-lasting lipstick with rich color and moisturizing formula." },
   { name: "Maybelline Mascara", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop&auto=format&q=80", price: 149.99, description: "Volumizing mascara that adds length and thickness to lashes." },
   { name: "L'Oreal Foundation", image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop&auto=format&q=80", price: 179.99, description: "Full coverage foundation with natural finish and long-lasting wear." },
@@ -58,7 +56,7 @@ const perfectProducts = [
   { name: "Olay Anti-Aging Cream", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop&auto=format&q=80", price: 299.99, description: "Anti-aging moisturizer with retinol and hyaluronic acid for younger-looking skin." },
   { name: "Centrum Multivitamin", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=400&fit=crop&auto=format&q=80", price: 249.99, description: "Complete multivitamin with essential vitamins and minerals for daily health." },
   
-  // Sports & Fitness
+ 
   { name: "Nike Yoga Mat", image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&auto=format&q=80", price: 399.99, description: "Premium yoga mat with excellent grip and cushioning for all yoga practices." },
   { name: "Bowflex Dumbbells", image: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop&auto=format&q=80", price: 1299.99, description: "Adjustable dumbbells that replace multiple sets, perfect for home gym." },
   { name: "Wilson Tennis Racket", image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop&auto=format&q=80", price: 899.99, description: "Professional tennis racket with advanced technology for power and control." },
@@ -70,10 +68,10 @@ const perfectProducts = [
 ];
 
 function createPerfectProduct(index) {
-  // Select a product based on index to ensure variety
+  
   const product = perfectProducts[index % perfectProducts.length];
   
-  // Create truly unique products by varying multiple attributes
+  
   const variations = [
     'Premium', 'Deluxe', 'Pro', 'Elite', 'Classic', 'Modern', 'Eco', 'Smart', 
     'Advanced', 'Professional', 'Luxury', 'Essential', 'Compact', 'Portable'
@@ -86,7 +84,7 @@ function createPerfectProduct(index) {
   
   const sizes = ['Small', 'Medium', 'Large', 'XL', 'XXL', 'Compact', 'Standard', 'Oversized'];
   
-  // Only add variations if we're creating multiple instances of the same base product
+  
   if (index >= perfectProducts.length) {
     const variationIndex = Math.floor(index / perfectProducts.length);
     const variation = variations[variationIndex % variations.length];
@@ -95,7 +93,7 @@ function createPerfectProduct(index) {
     
     const uniqueName = `${variation} ${color} ${product.name}`;
     const uniqueDescription = `${variation} ${color} version of ${product.description.toLowerCase()}`;
-    const uniquePrice = product.price * (1 + (variationIndex * 0.1)); // Vary price slightly
+    const uniquePrice = product.price * (1 + (variationIndex * 0.1)); 
     
     return {
       name: uniqueName,
@@ -110,7 +108,7 @@ function createPerfectProduct(index) {
     };
   }
   
-  // For the first instance of each product, keep it as is
+ 
   return {
     name: product.name,
     description: product.description,
@@ -124,20 +122,20 @@ function createPerfectProduct(index) {
   };
 }
 
-// Clear all products and regenerate with unique system
+
 const clearAndRegeneratePerfectProducts = async () => {
   try {
-    // Clear all existing products
+    
     await Product.deleteMany({});
     console.log('Cleared all existing products');
     
-    // Generate only the base products (no duplicates)
+    
     const products = [];
     for (let i = 0; i < perfectProducts.length; i++) {
       products.push(createPerfectProduct(i));
     }
     
-    // Insert all products
+    
     await Product.insertMany(products);
     console.log(`Generated ${products.length} unique perfect products`);
     
@@ -148,7 +146,7 @@ const clearAndRegeneratePerfectProducts = async () => {
   }
 };
 
-// Auto-generate perfect products on startup
+
 const autoGeneratePerfectProducts = async () => {
   try {
     const count = await Product.countDocuments();
@@ -168,7 +166,7 @@ const autoGeneratePerfectProducts = async () => {
   }
 };
 
-// Generate unlimited perfect products
+
 const generateUnlimitedPerfectProducts = async (req, res) => {
   try {
     const { count = 100 } = req.body;
@@ -178,7 +176,7 @@ const generateUnlimitedPerfectProducts = async (req, res) => {
       products.push(createPerfectProduct(i));
     }
 
-    // Insert in batches to avoid memory issues
+   
     const batchSize = 50;
     for (let i = 0; i < products.length; i += batchSize) {
       const batch = products.slice(i, i + batchSize);
@@ -200,7 +198,7 @@ const generateUnlimitedPerfectProducts = async (req, res) => {
   }
 };
 
-// Get perfect products with pagination
+
 const getPerfectProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;

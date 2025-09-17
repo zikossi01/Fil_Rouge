@@ -31,7 +31,7 @@ export default function Admin() {
     setError(null);
     try {
       const { data } = await api.post('/seed/fakestore');
-      // Reload products after import
+     
       const products = await api.get('/products');
       setData(prev => ({ ...prev, products: products.data.products || [] }));
       setImportMsg(`Imported ${data.count} products from FakeStore`);

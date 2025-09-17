@@ -1,4 +1,4 @@
-// models/Product.js (updated)
+
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -16,12 +16,12 @@ const productSchema = new mongoose.Schema({
     required: true,
     min: 0
   },
-  // category removed per requirement to drop categories from products
+ 
   image: {
     type: String,
     default: 'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1200&q=80&auto=format&fit=crop'
   },
-  // stock retained for display, but not enforced; treat as unlimited
+ 
   stock: {
     type: Number,
     required: false,
@@ -37,7 +37,7 @@ const productSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   },
-  // NEW FIELDS ADDED
+
   averageRating: {
     type: Number,
     default: 0,

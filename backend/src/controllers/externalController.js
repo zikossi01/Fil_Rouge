@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-// Category mapping for different APIs
+
 const categoryMapping = {
   electronics: ['smartphones', 'laptops', 'tablets', 'mobile-accessories'],
   jewelery: ['mens-watches', 'womens-watches', 'womens-jewellery'],
@@ -12,7 +12,7 @@ const categoryMapping = {
   pantry: ['groceries']
 };
 
-// Main search function that combines multiple real APIs
+
 const searchLiveProducts = async (req, res) => {
   try {
     const { q, category, page = 1, limit = 12 } = req.query;
@@ -21,9 +21,9 @@ const searchLiveProducts = async (req, res) => {
 
     let allProducts = [];
     
-    // Try multiple APIs and combine results
+  
     try {
-      // 1. DummyJSON API (reliable with good images and descriptions)
+     
       const dummyProducts = await searchDummyJSON(q, category, pageNum, limitNum);
       allProducts = allProducts.concat(dummyProducts);
     } catch (err) {
@@ -31,7 +31,7 @@ const searchLiveProducts = async (req, res) => {
     }
 
     try {
-      // 2. FakeStore API (good for electronics, clothing, jewelry)
+     
       const fakeStoreProducts = await searchFakeStoreAPI(q, category, pageNum, limitNum);
       allProducts = allProducts.concat(fakeStoreProducts);
     } catch (err) {
@@ -39,27 +39,27 @@ const searchLiveProducts = async (req, res) => {
     }
 
     try {
-      // 3. Platzi Fake Store API (another reliable source)
+      
       const platziProducts = await searchPlatziAPI(q, category, pageNum, limitNum);
       allProducts = allProducts.concat(platziProducts);
     } catch (err) {
       console.log('Platzi API failed:', err.message);
     }
 
-    // Remove duplicates based on name similarity
+  
     allProducts = removeDuplicates(allProducts);
 
-    // Apply filters
+   
     let filteredProducts = allProducts;
 
-    // Filter by category
+  
     if (category && category !== 'all') {
       filteredProducts = filteredProducts.filter(product => 
         product.category.toLowerCase() === category.toLowerCase()
       );
     }
 
-    // Filter by search query
+    
     if (q && q.trim()) {
       const searchTerm = q.toLowerCase().trim();
       filteredProducts = filteredProducts.filter(product =>
@@ -68,7 +68,7 @@ const searchLiveProducts = async (req, res) => {
       );
     }
 
-    // Pagination
+   
     const startIndex = (pageNum - 1) * limitNum;
     const endIndex = startIndex + limitNum;
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
@@ -90,14 +90,14 @@ const searchLiveProducts = async (req, res) => {
   }
 };
 
-// DummyJSON API - Excellent product data with real images
+
 async function searchDummyJSON(query, category, page, limit) {
   const products = [];
   
   try {
     let apiUrl = 'https://dummyjson.com/products';
     
-    // If category is specified, try to use category endpoint
+   
     if (category && categoryMapping[category]) {
       for (const djCategory of categoryMapping[category]) {
         try {
@@ -116,7 +116,7 @@ async function searchDummyJSON(query, category, page, limit) {
       }
     }
     
-    // If no category or search query, get general products
+    
     if (products.length === 0) {
       const skip = (page - 1) * limit;
       apiUrl = `${apiUrl}?limit=100&skip=${skip}`;
@@ -141,14 +141,14 @@ async function searchDummyJSON(query, category, page, limit) {
   return products;
 }
 
-// FakeStore API - Good for basic categories
+
 async function searchFakeStoreAPI(query, category, page, limit) {
   const products = [];
   
   try {
     let apiUrl = 'https://fakestoreapi.com/products';
     
-    // FakeStore has limited categories but good data
+    
     if (category) {
       const fakeStoreCategories = {
         electronics: 'electronics',
@@ -175,14 +175,14 @@ async function searchFakeStoreAPI(query, category, page, limit) {
   return products;
 }
 
-// Platzi Fake Store API - Another good source
+
 async function searchPlatziAPI(query, category, page, limit) {
   const products = [];
   
   try {
     let apiUrl = 'https://api.escuelajs.co/api/v1/products';
     const offset = (page - 1) * limit;
-    apiUrl = `${apiUrl}?offset=${offset}&limit=${limit * 2}`; // Get more to filter
+    apiUrl = `${apiUrl}?offset=${offset}&limit=${limit * 2}`; 
     
     const response = await fetch(apiUrl);
     if (response.ok) {
@@ -197,7 +197,7 @@ async function searchPlatziAPI(query, category, page, limit) {
   return products;
 }
 
-// Product mapping functions
+
 function mapDummyJSONProduct(product) {
   return {
     _id: `dj_${product.id}`,
@@ -233,7 +233,7 @@ function mapFakeStoreProduct(product) {
 }
 
 function mapPlatziProduct(product) {
-  // Filter out invalid images and products
+
   if (!product.images || product.images.length === 0 || 
       product.images[0].includes('placeimg.com') ||
       !product.title || !product.description) {
@@ -256,55 +256,55 @@ function mapPlatziProduct(product) {
   };
 }
 
-// Map various API categories to our platform categories
+
 function mapCategoryToPlatform(apiCategory) {
   if (!apiCategory) return 'other';
   
   const category = apiCategory.toLowerCase();
   
-  // Electronics
+
   if (category.includes('smartphone') || category.includes('laptop') || 
       category.includes('tablet') || category.includes('electronic') ||
       category.includes('mobile') || category.includes('computer')) {
     return 'electronics';
   }
   
-  // Jewelry
+  
   if (category.includes('jewel') || category.includes('watch') || 
       category.includes('accessory')) {
     return 'jewelery';
   }
   
-  // Men's clothing
+ 
   if (category.includes("men") || category.includes("man's")) {
     return 'men';
   }
   
-  // Women's clothing
+
   if (category.includes("women") || category.includes("woman's")) {
     return 'women';
   }
   
-  // General clothing
+
   if (category.includes('clothing') || category.includes('apparel') ||
       category.includes('shirt') || category.includes('dress') ||
       category.includes('top')) {
     return 'clothing';
   }
   
-  // Home & furniture
+  
   if (category.includes('home') || category.includes('furniture') || 
       category.includes('decoration') || category.includes('kitchen')) {
     return 'home';
   }
   
-  // Automotive
+
   if (category.includes('automotive') || category.includes('car') || 
       category.includes('motorcycle')) {
     return 'automotive';
   }
   
-  // Food & groceries
+
   if (category.includes('food') || category.includes('grocery') || 
       category.includes('snack')) {
     return 'pantry';
@@ -313,7 +313,7 @@ function mapCategoryToPlatform(apiCategory) {
   return 'other';
 }
 
-// Remove duplicate products based on name similarity
+
 function removeDuplicates(products) {
   const seen = new Set();
   return products.filter(product => {
@@ -326,14 +326,14 @@ function removeDuplicates(products) {
   });
 }
 
-// Get product categories from DummyJSON
+
 const getProductCategories = async (req, res) => {
   try {
     const response = await fetch('https://dummyjson.com/products/categories');
     if (response.ok) {
       const categories = await response.json();
       
-      // Map to our platform categories
+    
       const mappedCategories = categories.map(cat => ({
         id: cat.slug || cat,
         name: cat.name || cat,
@@ -350,14 +350,14 @@ const getProductCategories = async (req, res) => {
   }
 };
 
-// Get trending products (mix from all APIs)
+
 const getTrendingProducts = async (req, res) => {
   try {
     const { limit = 20 } = req.query;
     
     const trendingProducts = [];
     
-    // Get some trending from each API
+   
     try {
       const dummyTrending = await fetch('https://dummyjson.com/products?limit=10&skip=0');
       if (dummyTrending.ok) {
@@ -380,7 +380,7 @@ const getTrendingProducts = async (req, res) => {
       console.log('FakeStore trending failed:', err.message);
     }
     
-    // Remove duplicates and limit results
+   
     const uniqueTrending = removeDuplicates(trendingProducts).slice(0, parseInt(limit));
     
     res.json({

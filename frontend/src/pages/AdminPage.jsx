@@ -10,7 +10,7 @@ const AdminPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock admin data
+   
     setTimeout(() => {
       setProducts([
         { _id: '1', name: 'Fresh Apples', price: 3.99, category: 'fruits', stock: 50, isAvailable: true },

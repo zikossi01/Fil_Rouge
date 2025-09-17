@@ -1,7 +1,7 @@
 const Delivery = require('../models/Delivery');
 const Order = require('../models/Order');
 
-// Assign delivery to delivery person
+
 const assignDelivery = async (req, res) => {
   try {
     const { orderId, deliveryPersonId } = req.body;
@@ -18,7 +18,7 @@ const assignDelivery = async (req, res) => {
 
     const createdDelivery = await delivery.save();
     
-    // Update order status
+  
     order.status = 'on_delivery';
     await order.save();
 
@@ -28,7 +28,7 @@ const assignDelivery = async (req, res) => {
   }
 };
 
-// Get deliveries for delivery person
+
 const getDeliveryPersonOrders = async (req, res) => {
   try {
     const deliveries = await Delivery.find({ deliveryPerson: req.user._id })
@@ -47,7 +47,7 @@ const getDeliveryPersonOrders = async (req, res) => {
   }
 };
 
-// Update delivery status
+
 const updateDeliveryStatus = async (req, res) => {
   try {
     const { status, notes } = req.body;
@@ -63,7 +63,7 @@ const updateDeliveryStatus = async (req, res) => {
       } else if (status === 'delivered') {
         delivery.deliveryTime = new Date();
         
-        // Update order status
+       
         const order = await Order.findById(delivery.order);
         if (order) {
           order.status = 'delivered';
@@ -81,7 +81,7 @@ const updateDeliveryStatus = async (req, res) => {
   }
 };
 
-// Get all deliveries (Admin only)
+
 const getAllDeliveries = async (req, res) => {
   try {
     const deliveries = await Delivery.find({})
@@ -108,7 +108,7 @@ module.exports = {
   getAllDeliveries
 };
 
-// List available orders that are not yet assigned to any delivery
+
 const listAvailableOrders = async (req, res) => {
   try {
     const deliveries = await Delivery.find({}).select('order');
@@ -124,7 +124,7 @@ const listAvailableOrders = async (req, res) => {
   }
 };
 
-// Claim an order as a delivery person
+
 const claimOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;

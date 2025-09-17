@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 const isAllowedId = (value) => {
   if (typeof value !== 'string' || !value.trim()) return false;
-  // Allow Mongo ObjectId or generated IDs from external/unlimited systems
+ 
   return (
     /^[0-9a-fA-F]{24}$/.test(value) ||
     /^product_/.test(value) ||
@@ -17,7 +17,7 @@ const loadCart = () => {
   try {
     const raw = localStorage.getItem('cart');
     const parsed = raw ? JSON.parse(raw) : [];
-    // filter invalid ids
+    
     const cleaned = Array.isArray(parsed)
       ? parsed.filter((i) => i && i.product && i.product._id && isAllowedId(i.product._id))
       : [];
@@ -36,7 +36,7 @@ export const useCartStore = create((set, get) => ({
 
   addItem: (product, quantity = 1) => {
     if (!product || !isAllowedId(product._id)) {
-      return; // ignore invalid ids
+      return; 
     }
     set((state) => {
       const existing = state.items.find((i) => i.product._id === product._id);

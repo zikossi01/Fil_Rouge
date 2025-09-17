@@ -1,13 +1,13 @@
-// Mock API service (replace with actual backend calls)
+
 const API_BASE = 'http://localhost:5000/api';
 
 const api = {
-  // Auth endpoints
+
   login: async (email, password) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // simulate delay
+      await new Promise((resolve) => setTimeout(resolve, 1000)); 
 
-      // Fake login check
+     
       if (email !== "test@example.com" || password !== "password123") {
         throw new Error("Invalid email or password");
       }
@@ -21,7 +21,7 @@ const api = {
       };
     } catch (err) {
       console.error("Login error:", err.message);
-      throw err; // rethrow so frontend can handle it
+      throw err; 
     }
   },
 
@@ -41,12 +41,12 @@ const api = {
     }
   },
 
-  // Products endpoints
+  
   getProducts: async (filters = {}) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       
-      // Base products data
+      
       let products = [
         {
           _id: "1",
@@ -116,17 +116,17 @@ const api = {
         },
       ];
 
-      // Apply filters
+     
       let filteredProducts = products;
 
-      // Filter by category
+     
       if (filters.category && filters.category !== 'all') {
         filteredProducts = filteredProducts.filter(
           product => product.category.toLowerCase() === filters.category.toLowerCase()
         );
       }
 
-      // Filter by search query (name or description)
+      
       if (filters.search) {
         const searchTerm = filters.search.toLowerCase();
         filteredProducts = filteredProducts.filter(
@@ -136,7 +136,7 @@ const api = {
         );
       }
 
-      // Filter by price range
+    
       if (filters.minPrice !== undefined) {
         filteredProducts = filteredProducts.filter(
           product => product.price >= parseFloat(filters.minPrice)
@@ -149,14 +149,14 @@ const api = {
         );
       }
 
-      // Filter by availability (in stock)
+     
       if (filters.inStock === true || filters.inStock === 'true') {
         filteredProducts = filteredProducts.filter(
           product => product.stock > 0
         );
       }
 
-      // Sort products
+    
       if (filters.sortBy) {
         switch (filters.sortBy) {
           case 'price_asc':
@@ -178,12 +178,12 @@ const api = {
             filteredProducts.sort((a, b) => b.stock - a.stock);
             break;
           default:
-            // No sorting or keep original order
+           
             break;
         }
       }
 
-      // Pagination
+      
       const page = parseInt(filters.page) || 1;
       const limit = parseInt(filters.limit) || 10;
       const startIndex = (page - 1) * limit;
@@ -197,7 +197,7 @@ const api = {
         totalPages,
         currentPage: page,
         total: filteredProducts.length,
-        filters: filters, // Return applied filters for frontend reference
+        filters: filters, 
       };
     } catch (err) {
       console.error("Get products error:", err.message);
@@ -205,7 +205,7 @@ const api = {
     }
   },
 
-  // Orders endpoints
+ 
   createOrder: async (orderData) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));

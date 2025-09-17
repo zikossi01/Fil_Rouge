@@ -1,13 +1,12 @@
 const Product = require('../models/Product');
 
-// Curated real-world products with MAD prices (categories removed)
-// Images sourced from reputable CDNs (Unsplash) and vendor images where applicable
+
 const curatedProducts = [
-  // Food / Pantry
+ 
   {
     name: 'Moroccan Extra Virgin Olive Oil 1L',
     description: 'Cold-pressed extra virgin olive oil from Meknes region, premium quality.',
-    price: 89.0, // MAD
+    price: 89.0, 
     
     image: 'https://images.unsplash.com/photo-1615486364039-b85a9b7be2d1?w=1200&q=80&auto=format&fit=crop',
     stock: 150,
@@ -44,7 +43,7 @@ const curatedProducts = [
     unit: 'kg',
     isAvailable: true
   },
-  // Electronics
+
   {
     name: 'Wireless Earbuds Bluetooth 5.3',
     description: 'Noise-reducing wireless earbuds with charging case, 24h playtime.',
@@ -65,7 +64,7 @@ const curatedProducts = [
     unit: 'piece',
     isAvailable: true
   },
-  // Clothing
+ 
   {
     name: 'Classic White T-Shirt',
     description: '100% cotton crew neck t-shirt, breathable and comfortable.',
@@ -86,7 +85,7 @@ const curatedProducts = [
     unit: 'piece',
     isAvailable: true
   },
-  // Home
+
   {
     name: 'LED Table Lamp',
     description: 'Warm white LED lamp with minimalist design, energy efficient.',
@@ -99,7 +98,7 @@ const curatedProducts = [
   }
 ];
 
-// GET /api/curated -> return curated products (without touching DB)
+
 const getCuratedProducts = async (req, res) => {
   try {
     res.json({ products: curatedProducts, currency: 'MAD' });
@@ -108,7 +107,7 @@ const getCuratedProducts = async (req, res) => {
   }
 };
 
-// POST /api/curated/seed -> insert curated products into DB (idempotent by name)
+
 const seedCuratedProducts = async (req, res) => {
   try {
     let created = 0;
@@ -131,7 +130,7 @@ const seedCuratedProducts = async (req, res) => {
 
 module.exports = { getCuratedProducts, seedCuratedProducts };
 
-// Utility: generate diverse products across many types (food, tech, clothes, home, sports, beauty, toys, office, auto, pet, baby, books)
+
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -168,7 +167,7 @@ const imageQueries = {
   books: 'book,books,cover'
 };
 
-// Better approach: use curated product images with specific IDs
+
 const productImages = {
   food: [
     'https://images.unsplash.com/photo-1542838132-92c53300491e?w=600&h=400&fit=crop&auto=format&q=80',
@@ -235,9 +234,9 @@ const productImages = {
 function getProductImage(productName) {
   const name = productName.toLowerCase();
   
-  // More comprehensive product-image mappings with better keywords
+ 
   const productImageMap = {
-    // Food items
+   
     'olive oil': 'https://images.unsplash.com/photo-1615486364039-b85a9b7be2d1?w=600&h=400&fit=crop&auto=format&q=80',
     'rice': 'https://images.unsplash.com/photo-1622629671125-4f45c4b6cf37?w=600&h=400&fit=crop&auto=format&q=80',
     'honey': 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&h=400&fit=crop&auto=format&q=80',
@@ -248,7 +247,6 @@ function getProductImage(productName) {
     'almonds': 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=600&h=400&fit=crop&auto=format&q=80',
     'granola': 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Electronics
     'earbuds': 'https://images.unsplash.com/photo-1518443872736-1edb7f5c51dc?w=600&h=400&fit=crop&auto=format&q=80',
     'speaker': 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=400&fit=crop&auto=format&q=80',
     'smartphone': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=400&fit=crop&auto=format&q=80',
@@ -260,7 +258,7 @@ function getProductImage(productName) {
     'router': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     'wifi': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Clothing
+  
     't-shirt': 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop&auto=format&q=80',
     'hoodie': 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=400&fit=crop&auto=format&q=80',
     'jacket': 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=400&fit=crop&auto=format&q=80',
@@ -272,7 +270,7 @@ function getProductImage(productName) {
     'pants': 'https://images.unsplash.com/photo-1506629905607-1b1a1b1b1b1b?w=600&h=400&fit=crop&auto=format&q=80',
     'polo': 'https://images.unsplash.com/photo-1506629905607-1b1a1b1b1b1b?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Home
+   
     'lamp': 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=600&h=400&fit=crop&auto=format&q=80',
     'diffuser': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop&auto=format&q=80',
     'pillow': 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop&auto=format&q=80',
@@ -284,7 +282,7 @@ function getProductImage(productName) {
     'basket': 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop&auto=format&q=80',
     'towel': 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Beauty
+   
     'moisturizer': 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop&auto=format&q=80',
     'serum': 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&h=400&fit=crop&auto=format&q=80',
     'sunscreen': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop&auto=format&q=80',
@@ -297,7 +295,7 @@ function getProductImage(productName) {
     'balm': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop&auto=format&q=80',
     'lip': 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Sports
+   
     'mat': 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&auto=format&q=80',
     'dumbbell': 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop&auto=format&q=80',
     'rope': 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop&auto=format&q=80',
@@ -310,7 +308,7 @@ function getProductImage(productName) {
     'bottle': 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop&auto=format&q=80',
     'tracker': 'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Toys
+  
     'blocks': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     'car': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     'puzzle': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
@@ -322,7 +320,7 @@ function getProductImage(productName) {
     'kit': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     'art': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Office
+  
     'chair': 'https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=600&h=400&fit=crop&auto=format&q=80',
     'organizer': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&auto=format&q=80',
     'notebook': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&auto=format&q=80',
@@ -332,7 +330,7 @@ function getProductImage(productName) {
     'stapler': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&auto=format&q=80',
     'whiteboard': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Auto
+    
     'mount': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop&auto=format&q=80',
     'inflator': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop&auto=format&q=80',
     'covers': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop&auto=format&q=80',
@@ -342,7 +340,7 @@ function getProductImage(productName) {
     'headlights': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop&auto=format&q=80',
     'steering': 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Pet
+
     'leash': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop&auto=format&q=80',
     'litter': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop&auto=format&q=80',
     'bed': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop&auto=format&q=80',
@@ -352,7 +350,7 @@ function getProductImage(productName) {
     'food': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop&auto=format&q=80',
     'cage': 'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Baby
+ 
     'diapers': 'https://images.unsplash.com/photo-1544376664-80b17f09d399?w=600&h=400&fit=crop&auto=format&q=80',
     'wipes': 'https://images.unsplash.com/photo-1544376664-80b17f09d399?w=600&h=400&fit=crop&auto=format&q=80',
     'stroller': 'https://images.unsplash.com/photo-1544376664-80b17f09d399?w=600&h=400&fit=crop&auto=format&q=80',
@@ -363,7 +361,7 @@ function getProductImage(productName) {
     'onesies': 'https://images.unsplash.com/photo-1544376664-80b17f09d399?w=600&h=400&fit=crop&auto=format&q=80',
     'blanket': 'https://images.unsplash.com/photo-1544376664-80b17f09d399?w=600&h=400&fit=crop&auto=format&q=80',
     
-    // Books
+   
     'novel': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop&auto=format&q=80',
     'cookbook': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop&auto=format&q=80',
     'guide': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop&auto=format&q=80',
@@ -377,14 +375,14 @@ function getProductImage(productName) {
     'travel': 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop&auto=format&q=80'
   };
   
-  // Check for exact matches first, then partial matches
+  
   for (const [keyword, imageUrl] of Object.entries(productImageMap)) {
     if (name.includes(keyword)) {
       return imageUrl;
     }
   }
   
-  // If no match found, use a unique fallback based on product name hash
+ 
   const hash = name.split('').reduce((a, b) => {
     a = ((a << 5) - a) + b.charCodeAt(0);
     return a & a;
@@ -426,13 +424,13 @@ async function ensureMinimumProducts(minCount = 60) {
   if (count >= minCount) return { created: 0 };
 
   const toCreate = [];
-  // Seed curated base once
+
   for (const item of curatedProducts) {
     const exists = await Product.findOne({ name: item.name });
     if (!exists) toCreate.push(item);
   }
 
-  // Generate diverse products
+  
   let idx = 0;
   while (toCreate.length < minCount) {
     const p = createRandomProduct(idx + Date.now());
@@ -447,7 +445,7 @@ async function ensureMinimumProducts(minCount = 60) {
   return { created: toCreate.length };
 }
 
-// Public endpoint to generate N additional diverse products
+
 const generateProducts = async (req, res) => {
   try {
     const count = Math.min(Number(req.query.count) || 100, 500);

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import api from '../services/api.js';
 
-// Context for authentication
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -10,13 +10,13 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     try {
-      // Check for stored user with proper null handling
+    
       const storedUserData = localStorage.getItem('user');
       const storedUser = storedUserData ? JSON.parse(storedUserData) : null;
       setUser(storedUser);
     } catch (error) {
       console.error('Error parsing stored user data:', error);
-      // Clear corrupted data
+   
       localStorage.removeItem('user');
       setUser(null);
     } finally {

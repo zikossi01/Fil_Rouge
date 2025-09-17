@@ -1,15 +1,14 @@
-// controllers/reviewController.js
+
 const Review = require('../models/Review');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const mongoose = require('mongoose');
 
-// Create a review
 const createReview = async (req, res) => {
   try {
     const { productId, rating, comment } = req.body;
     
-    // Check if user has purchased the product
+  
     const hasPurchased = await Order.findOne({
       user: req.user._id,
       'products.product': productId,
@@ -27,7 +26,7 @@ const createReview = async (req, res) => {
     const savedReview = await review.save();
     await savedReview.populate('user', 'name');
     
-    // Update product average rating
+
     await updateProductRating(productId);
     
     res.status(201).json(savedReview);
@@ -36,7 +35,7 @@ const createReview = async (req, res) => {
   }
 };
 
-// Get reviews for a product
+
 const getProductReviews = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -61,7 +60,7 @@ const getProductReviews = async (req, res) => {
   }
 };
 
-// Update a review
+
 const updateReview = async (req, res) => {
   try {
     const { rating, comment } = req.body;
@@ -81,7 +80,7 @@ const updateReview = async (req, res) => {
     const updatedReview = await review.save();
     await updatedReview.populate('user', 'name');
     
-    // Update product average rating
+
     await updateProductRating(review.product);
     
     res.json(updatedReview);
@@ -90,7 +89,7 @@ const updateReview = async (req, res) => {
   }
 };
 
-// Delete a review
+
 const deleteReview = async (req, res) => {
   try {
     const review = await Review.findOne({
@@ -105,7 +104,7 @@ const deleteReview = async (req, res) => {
     const productId = review.product;
     await Review.findByIdAndDelete(req.params.id);
     
-    // Update product average rating
+  
     await updateProductRating(productId);
     
     res.json({ message: 'Review deleted successfully' });
@@ -114,7 +113,7 @@ const deleteReview = async (req, res) => {
   }
 };
 
-// Helper function to update product rating
+
 const updateProductRating = async (productId) => {
   const result = await Review.aggregate([
     { $match: { product: new mongoose.Types.ObjectId(productId) } },
